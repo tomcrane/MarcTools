@@ -40,7 +40,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IKVM.OpenJDK.Charsets, Version=0.46.0.2, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SaxonHE9.5N\IKVM.OpenJDK.Charsets.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=0.46.0.2, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL" />
+    <Reference Include="IKVM.OpenJDK.XML.API, Version=0.46.0.2, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="saxon9he, Version=9.5.1.1, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL" />
+    <Reference Include="saxon9he-api, Version=9.5.1.1, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SaxonHE9.5N\saxon9he-api.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -140,6 +151,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BibFrameQuery.cs" />
     <Compile Include="Models\WellcomeLibraryIdentifiers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -191,6 +203,18 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="lcnetdev\modules\module.MARCXML-2-MADSRDF.xqy" />
+    <Content Include="lcnetdev\modules\module.MARCXML-2-RecordInfoRDF.xqy" />
+    <Content Include="lcnetdev\modules\module.MARCXMLBIB-2-BIBFRAME.xqy" />
+    <Content Include="lcnetdev\modules\module.MARCXMLBIB-BFUtils.xqy" />
+    <Content Include="lcnetdev\modules\module.MBIB-2-BIBFRAME-Shared.xqy" />
+    <Content Include="lcnetdev\modules\module.MBIB-Default-2-BF.xqy" />
+    <Content Include="lcnetdev\modules\module.MBIB-NotatedMusic-2-BF.xqy" />
+    <Content Include="lcnetdev\modules\module.RDFXML-2-ExhibitJSON.xqy" />
+    <Content Include="lcnetdev\modules\module.RDFXML-2-JSON.xqy" />
+    <Content Include="lcnetdev\modules\module.RDFXML-2-Ntriples.xqy" />
+    <Content Include="lcnetdev\modules\module.RDFXMLnested-2-flat.xqy" />
+    <Content Include="lcnetdev\xbin\saxon.xqy" />
     <None Include="Properties\PublishProfiles\wellcomelibrarymarc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\wellcomelibrarymarc - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

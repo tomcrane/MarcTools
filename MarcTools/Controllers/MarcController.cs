@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using MarcTools.Models;
+using net.sf.saxon;
+using net.sf.saxon.trans;
 using SobekCM.Bib_Package.MARC;
+using Controller = System.Web.Mvc.Controller;
 
 namespace MarcTools.Controllers
 {
@@ -46,7 +50,39 @@ namespace MarcTools.Controllers
                 ContentEncoding = Encoding.UTF8
             };
             return cr;
-            
+        }
+
+        public ContentResult BibFrame(string id, string serialisation = "rdfxml")
+        {
+            var baseUri = "http://wellcomelibrary.org/bf/" + id + "/";
+            var saxonXqy = Server.MapPath("~/lcnetdev/xbin/saxon.xqy");
+            var record = GetMarcRecord(id);
+            var tempMarcXml = Path.GetTempFileName();
+            record.Save_MARC_XML(tempMarcXml);
+            var bibQuery = new BibFrameQuery();
+            var bf = bibQuery.DoBibFrameQuery(saxonXqy, tempMarcXml, baseUri, serialisation);
+            // dirty tidyup
+            if (serialisation == "ntriples" && bf.Contains("?>&lt;"))
+            {
+                bf = bf.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
+                bf = bf.Replace("&lt;", "<");
+                bf = bf.Replace("&gt;", ">");
+            }
+            if (serialisation == "json" && bf.Contains("&#xD;"))
+            {
+                bf = bf.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
+                bf = bf.Replace("&#xD;", "");
+                bf = bf.Replace("&lt;", "<");
+                bf = bf.Replace("&gt;", ">");
+            }
+            var cr = new ContentResult
+            {
+                Content = bf,
+                ContentType = serialisation.StartsWith("rdfxml") ? "text/xml" : "text/plain",
+                ContentEncoding = Encoding.UTF8
+            };
+            System.IO.File.Delete(tempMarcXml);
+            return cr;
         }
 
         private MARC_Record GetMarcRecord(String bNumber)
